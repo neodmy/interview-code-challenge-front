@@ -1,0 +1,9 @@
+.Landing {
+    margin-top: 150px;
+}
+
+@media(min-width: 768px){
+    .Landing {
+        margin-top: 300px;
+    }
+}
