@@ -7,26 +7,29 @@ import Col from 'react-bootstrap/Col';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 
+import PhoneCard from '../../components/PhoneCard/PhoneCard';
 import Spinner from '../../components/Spinner/Spinner';
 import styles from './Products.module.css';
-import phone_generic from '../../images/phone_generic.png'
+import * as actions from '../../store/actions';
+
+import phone_generic from '../../images/phone_generic.png';
+import galaxy_s7 from '../../images/galaxy_s7.png';
 
 class Products extends Component {
 
-    phone = {
-        name: 'iPhone 7',
-        manufacturer: 'Apple',
-        description: 'iPhone 7 dramatically improves the most important aspects of the iPhone experience. It introduces advanced new camera systems. The best performance and battery life ever in an iPhone. Immersive stereo speakers. The brightest, most colorful iPhone display. Splash and water resistance*. And it looks every bit as powerful as it is. This is iPhone 7.',
-        color: 'black',
-        price: 769,
-        imageFileName: 'IPhone_7.png',
-        screen: '4,7 inch IPS',
-        processor: 'A10 Fusion',
-        ram: 2,
+    componentDidMount() {
+        this.props.onFetchPones();
     }
 
     render() {
         let content = <Spinner />
+        if (this.props.phones.lenght !== 0) {
+            const phones = this.props.phones;
+            content = phones.map(phone => {
+                return <PhoneCard key={phone._id} img={galaxy_s7} name={phone.name} description={phone.description} />
+            });
+        }
+
         return (
             <Container className="text-center text-light">
                 <Row className="my-5">
@@ -35,47 +38,7 @@ class Products extends Component {
                     </Col>
                 </Row>
                 <Row className="row justify-content-center">
-                    <Card className={styles.card}>
-                        <Card.Img variant="top" src={phone_generic} className={styles.prev_img} />
-                        <Card.Body>
-                            <Card.Title>{this.phone.name}</Card.Title>
-                            <Card.Text>
-                                {this.phone.description.substring(0, 60) + '...'}
-                            </Card.Text>
-                            <Button variant="outline-light">Go somewhere</Button>
-                        </Card.Body>
-                    </Card>
-                    <Card className={styles.card}>
-                        <Card.Img variant="top" src={phone_generic} className={styles.prev_img} />
-                        <Card.Body>
-                            <Card.Title>{this.phone.name}</Card.Title>
-                            <Card.Text>
-                                {this.phone.description.substring(0, 60) + '...'}
-                            </Card.Text>
-                            <Button variant="outline-light">Go somewhere</Button>
-                        </Card.Body>
-                    </Card>
-                    <Card className={styles.card}>
-                        <Card.Img variant="top" src={phone_generic} className={styles.prev_img} />
-                        <Card.Body>
-                            <Card.Title>{this.phone.name}</Card.Title>
-                            <Card.Text>
-                                {this.phone.description.substring(0, 60) + '...'}
-                            </Card.Text>
-                            <Button variant="outline-light">Go somewhere</Button>
-                        </Card.Body>
-                    </Card>
-                    <Card className={styles.card}>
-                        <Card.Img variant="top" src={phone_generic} className={styles.prev_img} />
-                        <Card.Body>
-                            <Card.Title>{this.phone.name}</Card.Title>
-                            <Card.Text>
-                                {this.phone.description.substring(0, 60) + '...'}
-                            </Card.Text>
-                            <Button variant="outline-light">Go somewhere</Button>
-                        </Card.Body>
-                    </Card>
-
+                    {content}
                 </Row>
             </Container>
         );
@@ -84,7 +47,7 @@ class Products extends Component {
 
 const mapStateToProps = state => {
     return {
-        orders: state.phones.orders,
+        phones: state.phones.phones,
         loading: state.phones.loading,
         error: state.phones.error,
     }
@@ -92,7 +55,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-
+        onFetchPones: () => dispatch(actions.fetchPhones()),
     }
 }
 

@@ -26,7 +26,6 @@ export const fetchPhones = () => {
         dispatch(fetchPhonesStart());
         axios.get('/phones')
             .then(res => {
-                console.log(res.data);
                 dispatch(fetchPhonesSuccess(res.data))
             })
             .catch(err => {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import Container from 'react-bootstrap/Container';
@@ -23,7 +24,7 @@ class Landing extends Component {
                     <Col sm={6}>
                         <h1 className="display-4">Phones Store</h1>
                         <p>Explore our products</p>
-                        <Button onClick={this.checkoutHandler} variant="outline-light" className="mt-3">CHECK OUT</Button>
+                        <Button as={NavLink} to="/products" variant="outline-light" className="mt-3">CHECK OUT</Button>
                     </Col>
                 </Row>
             </Container>

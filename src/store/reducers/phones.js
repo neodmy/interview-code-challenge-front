@@ -13,10 +13,11 @@ const fetchPhonesStart = (state, action) => {
 }
 
 const fecthPhonesSuccess = (state, action) => {
-    return updateObject(state, {
-        orders: action.orders,
+    return {
+        ...state,
         loading: false,
-    });
+        phones: action.phones,
+    }
 }
 
 const fetchPhonesFail = (state, action) => {
@@ -26,10 +27,10 @@ const fetchPhonesFail = (state, action) => {
 const reducer = (state = initialState, action) => {
     const actions = {
         [actionTypes.FETCH_PHONES_START]: () => fetchPhonesStart(state, action),
-        [actionTypes.FETCH_INDIVIDUAL_PHONE_SUCCESS]: () => fecthPhonesSuccess(state, action),
-        [actionTypes.FETCH_INDIVIDUAL_PHONE_FAIL]: () => fetchPhonesFail(state, action),
+        [actionTypes.FETCH_PHONES_SUCCESS]: () => fecthPhonesSuccess(state, action),
+        [actionTypes.FETCH_PHONES_FAIL]: () => fetchPhonesFail(state, action),
     }
-    const dispatchedAction = actions[action];
+    const dispatchedAction = actions[action.type];
     return !dispatchedAction ? state : dispatchedAction();
 };
 
