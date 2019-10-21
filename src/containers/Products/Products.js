@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 
 import Spinner from '../../components/Spinner/Spinner';
 import styles from './Products.module.css';
+import phone_generic from '../../images/phone_generic.png'
 
 class Products extends Component {
 
@@ -33,18 +34,48 @@ class Products extends Component {
                         <h1 className="display-4">Featured Products</h1>
                     </Col>
                 </Row>
-                <Row>
-                    <Col sm={6}>
-                        <Card style={{ width: '18rem' }} className={styles.card}>
-                            <Card.Body>
-                                <Card.Title>{this.phone.name}</Card.Title>
-                                <Card.Text>
-                                    {this.phone.description.substring(0, 60) + '...'}
-                                </Card.Text>
-                                <Button variant="primary">Go somewhere</Button>
-                            </Card.Body>
-                        </Card>
-                    </Col>
+                <Row className="row justify-content-center">
+                    <Card className={styles.card}>
+                        <Card.Img variant="top" src={phone_generic} className={styles.prev_img} />
+                        <Card.Body>
+                            <Card.Title>{this.phone.name}</Card.Title>
+                            <Card.Text>
+                                {this.phone.description.substring(0, 60) + '...'}
+                            </Card.Text>
+                            <Button variant="outline-light">Go somewhere</Button>
+                        </Card.Body>
+                    </Card>
+                    <Card className={styles.card}>
+                        <Card.Img variant="top" src={phone_generic} className={styles.prev_img} />
+                        <Card.Body>
+                            <Card.Title>{this.phone.name}</Card.Title>
+                            <Card.Text>
+                                {this.phone.description.substring(0, 60) + '...'}
+                            </Card.Text>
+                            <Button variant="outline-light">Go somewhere</Button>
+                        </Card.Body>
+                    </Card>
+                    <Card className={styles.card}>
+                        <Card.Img variant="top" src={phone_generic} className={styles.prev_img} />
+                        <Card.Body>
+                            <Card.Title>{this.phone.name}</Card.Title>
+                            <Card.Text>
+                                {this.phone.description.substring(0, 60) + '...'}
+                            </Card.Text>
+                            <Button variant="outline-light">Go somewhere</Button>
+                        </Card.Body>
+                    </Card>
+                    <Card className={styles.card}>
+                        <Card.Img variant="top" src={phone_generic} className={styles.prev_img} />
+                        <Card.Body>
+                            <Card.Title>{this.phone.name}</Card.Title>
+                            <Card.Text>
+                                {this.phone.description.substring(0, 60) + '...'}
+                            </Card.Text>
+                            <Button variant="outline-light">Go somewhere</Button>
+                        </Card.Body>
+                    </Card>
+
                 </Row>
             </Container>
         );
