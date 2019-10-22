@@ -5,9 +5,16 @@ const initialState = {
     isAdmin: false,
 };
 
-const reducer = (state = initialState, action) => {
-    return action.type === actionTypes.SWITCH_ADMIN ? updateObject(state, { isAdmin: !state.isAdmin }) : state;
+const switchAdmin = (state, action) => {
+    return updateObject(state, { isAdmin: !state.isAdmin });
+}
 
+const reducer = (state = initialState, action) => {
+    const actions = {
+        [actionTypes.SWITCH_ADMIN]: () => switchAdmin(state, action),
+    }
+    const dispatchedAction = actions[action.type];
+    return !dispatchedAction ? state : dispatchedAction();
 };
 
 export default reducer;

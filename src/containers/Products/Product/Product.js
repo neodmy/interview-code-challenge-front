@@ -8,7 +8,6 @@ import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 
 import styles from './Product.module.css';
-import phone_generic from '../../../images/phone_generic.png';
 
 class Product extends Component {
     constructor(props) {
