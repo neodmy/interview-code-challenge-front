@@ -26,6 +26,7 @@ export const fetchPhones = () => {
         dispatch(fetchPhonesStart());
         axios.get('/phones')
             .then(res => {
+                res.data.forEach(phone => phone.imageFileName = 'http://localhost:3001/' + phone.imageFileName)
                 dispatch(fetchPhonesSuccess(res.data));
             })
             .catch(err => {

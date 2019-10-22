@@ -30,7 +30,7 @@ class Product extends Component {
                 );
             }
         }
-        return table;;
+        return table;
     }
 
     render() {
@@ -43,7 +43,7 @@ class Product extends Component {
                     </Row>
                     <Row className="row justify-content-center">
                         <Col lg={4} className="my-auto">
-                            <img src={phone_generic} alt="phone_image" className={styles.phone_img} />
+                            <img src={this.phone.imageFileName} alt="phone_image" className={styles.phone_img} />
                         </Col>
                         <Col lg={6}>
                             <p>{this.phone.description}</p>

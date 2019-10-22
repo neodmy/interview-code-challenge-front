@@ -9,9 +9,6 @@ import PhoneCard from '../../components/PhoneCard/PhoneCard';
 import Spinner from '../../components/Spinner/Spinner';
 import * as actions from '../../store/actions';
 
-import phone_generic from '../../images/phone_generic.png';
-import galaxy_s7 from '../../images/galaxy_s7.png';
-
 class Products extends Component {
     componentDidMount() {
         this.props.onFetchPones();
@@ -24,7 +21,7 @@ class Products extends Component {
             content = phones.map(phone => {
                 return <PhoneCard
                     key={phone._id}
-                    img={galaxy_s7}
+                    img={phone.imageFileName}
                     name={phone.name}
                     description={phone.description}
                     clicked={() => this.props.onSelectPhone(phone._id)} />
