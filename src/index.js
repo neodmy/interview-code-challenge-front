@@ -10,11 +10,13 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 import phonesReducer from './store/reducers/phones';
+import adminReducer from './store/reducers/admin';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
     phones: phonesReducer,
+    admin: adminReducer,
 });
 
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));

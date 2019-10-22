@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
@@ -14,7 +15,7 @@ const phoneCard = (props) => {
                 <Card.Text>
                     {props.description.substring(0, 60) + '...'}
                 </Card.Text>
-                <Button variant="outline-light">Details</Button>
+                <Button as={Link} to="/phone" variant="outline-light" onClick={props.clicked}>Details</Button>
             </Card.Body>
         </Card>
     );

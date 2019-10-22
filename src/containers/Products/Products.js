@@ -4,19 +4,15 @@ import { connect } from 'react-redux';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Card from 'react-bootstrap/Card';
-import Button from 'react-bootstrap/Button';
 
 import PhoneCard from '../../components/PhoneCard/PhoneCard';
 import Spinner from '../../components/Spinner/Spinner';
-import styles from './Products.module.css';
 import * as actions from '../../store/actions';
 
 import phone_generic from '../../images/phone_generic.png';
 import galaxy_s7 from '../../images/galaxy_s7.png';
 
 class Products extends Component {
-
     componentDidMount() {
         this.props.onFetchPones();
     }
@@ -26,7 +22,12 @@ class Products extends Component {
         if (this.props.phones.lenght !== 0) {
             const phones = this.props.phones;
             content = phones.map(phone => {
-                return <PhoneCard key={phone._id} img={galaxy_s7} name={phone.name} description={phone.description} />
+                return <PhoneCard
+                    key={phone._id}
+                    img={galaxy_s7}
+                    name={phone.name}
+                    description={phone.description}
+                    clicked={() => this.props.onSelectPhone(phone._id)} />
             });
         }
 
@@ -56,6 +57,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onFetchPones: () => dispatch(actions.fetchPhones()),
+        onSelectPhone: (phoneId) => dispatch(actions.selectPhone(phoneId))
     }
 }
 

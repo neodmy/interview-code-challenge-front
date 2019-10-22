@@ -1,0 +1,11 @@
+.phone_img {
+   height: 200px;
+   width: auto;
+   font-size: 8;
+}
+
+@media(min-width: 768px){
+    .phone_img {
+        height: 400px;
+    }
+}
