@@ -7,9 +7,7 @@ class Layout extends Component {
         return (
             <React.Fragment>
                 <Toolbar />
-                <main>
-                    {this.props.children}
-                </main>
+                {this.props.children}
             </React.Fragment>
         );
     }

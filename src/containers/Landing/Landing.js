@@ -20,8 +20,8 @@ class Landing extends Component {
     render() {
         return (
             <Container className={styles.Landing}>
-                <Row className="justify-content-center text-center text-light">
-                    <Col sm={6}>
+                <Row className="row justify-content-center text-center text-light">
+                    <Col sm={12}>
                         <h1 className="display-4">Phones Store</h1>
                         <p>Explore our products</p>
                         <Button as={NavLink} to="/products" variant="outline-light" className="mt-3">CHECK OUT</Button>

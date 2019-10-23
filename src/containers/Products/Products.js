@@ -16,7 +16,7 @@ class Products extends Component {
 
     render() {
         let content = <Spinner />
-        if (this.props.phones.lenght !== 0) {
+        if (this.props.phones.length !== 0) {
             const phones = this.props.phones;
             content = phones.map(phone => {
                 return <PhoneCard

@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
+import Button from 'react-bootstrap/Button';
 
 import styles from './Product.module.css';
 
@@ -34,12 +35,26 @@ class Product extends Component {
 
     render() {
         let content = <Redirect to="/products" />;
-        if (this.phone) {
+        if (this.props.phones.length !== 0) {
+            let edit = null;
+            if (this.props.isAdmin) {
+                edit = (
+                    <Row className="row justify-content-center mb-3">
+                        <Col >
+                            <Button variant="outline-light mr-2">Edit</Button>
+                            <Button variant="outline-danger">Delete</Button>
+                        </Col>
+                    </Row>
+                );
+            }
             content = (
                 <Container className="text-light text-center" >
-                    <Row className="row justify-content-center mt-5 mb-3">
-                        <h1 className="display-5">{this.phone.name}</h1>
+                    <Row className="row justify-content-center mt-5 mb-3 ">
+                        <Col>
+                            <h1 className="display-5">{this.phone.name}</h1>
+                        </Col>
                     </Row>
+                    {edit}
                     <Row className="row justify-content-center">
                         <Col lg={4} className="my-auto">
                             <img src={this.phone.imageFileName} alt="phone_image" className={styles.phone_img} />
@@ -70,7 +85,8 @@ class Product extends Component {
 const mapStateToProps = state => {
     return {
         phones: state.phones.phones,
-        selectedPhone: state.phones.selectedPhone
+        selectedPhone: state.phones.selectedPhone,
+        isAdmin: state.admin.isAdmin,
     }
 }
 

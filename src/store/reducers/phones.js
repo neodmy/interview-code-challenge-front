@@ -5,7 +5,6 @@ const initialState = {
     phones: [],
     loading: false,
     error: null,
-    phoneModified: false,
     selectedPhone: null,
 };
 
@@ -29,21 +28,6 @@ const selectPhone = (state, action) => {
     return updateObject(state, { selectedPhone: action.selectedPhone });
 };
 
-const modifyPhone = (state, action) => {
-    return updateObject(state, { phoneModified: true });
-};
-
-const savePhoneStart = (state, action) => {
-    return updateObject(state, { loading: true, error: null });
-}
-
-const savePhoneSuccess = (state, action) => {
-    return updateObject(state, { loading: false, }); //TODO
-}
-
-const savePhoneFail = (state, action) => {
-    return updateObject(state, { loading: false, error: action.error });
-}
 
 const reducer = (state = initialState, action) => {
     const actions = {
@@ -51,10 +35,6 @@ const reducer = (state = initialState, action) => {
         [actionTypes.FETCH_PHONES_SUCCESS]: () => fecthPhonesSuccess(state, action),
         [actionTypes.FETCH_PHONES_FAIL]: () => fetchPhonesFail(state, action),
         [actionTypes.SELECT_PHONE]: () => selectPhone(state, action),
-        [actionTypes.MODIFY_PHONE]: () => modifyPhone(state, action),
-        [actionTypes.SAVE_PHONE_START]: () => savePhoneStart(state, action),
-        [actionTypes.SAVE_PHONE_SUCCESS]: () => savePhoneSuccess(state, action),
-        [actionTypes.SAVE_PHONE_FAIL]: () => savePhoneFail(state, action),
     }
     const dispatchedAction = actions[action.type];
     return !dispatchedAction ? state : dispatchedAction();
