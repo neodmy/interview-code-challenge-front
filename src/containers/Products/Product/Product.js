@@ -13,6 +13,7 @@ import * as actions from '../../../store/actions';
 class Product extends Component {
     state = {
         showModal: false,
+        editMode: false
     }
 
     componentDidUpdate() {
@@ -36,15 +37,19 @@ class Product extends Component {
         this.props.onDeletePhone(this.phone._id);
     }
 
+    onEnterEditModeHandle = () => {
+        this.setState({ editMode: !this.state.editMode })
+    }
+
     createContent = () => {
         let content = <Redirect to="/products" />;
         if (this.phone) {
-            let edit = null;
+            let adminOptions = null;
             if (this.props.isAdmin) {
-                edit = (
+                adminOptions = (
                     <Row className="row justify-content-center mb-3">
                         <Col >
-                            <Button variant="outline-light mr-2">Edit</Button>
+                            <Button variant="outline-light mr-2" onClick={this.onEnterEditModeHandle}>Edit</Button>
                             <Button variant="outline-danger" onClick={this.onShowDeleteModalHandle}>Delete</Button>
                         </Col>
                     </Row>
@@ -63,7 +68,7 @@ class Product extends Component {
             content = (
                 <React.Fragment>
                     {deleteModal}
-                    <ProductData phone={this.phone} edit={edit} />
+                    <ProductData phone={this.phone} adminOptions={adminOptions} editMode={this.state.editMode} />
                 </React.Fragment>
 
             );

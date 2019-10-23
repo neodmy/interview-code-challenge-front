@@ -17,7 +17,7 @@ const productData = (props) => {
                 table.push(
                     <tr key={key}>
                         <td>{propUpperCase}</td>
-                        <td>{props.phone[key]}</td>
+                        <td>{props.editMode ? <input type="text" value={props.phone[key]} /> : props.phone[key]}</td>
                     </tr>
                 );
             }
@@ -32,7 +32,7 @@ const productData = (props) => {
                     <h1 className="display-5">{props.phone.name}</h1>
                 </Col>
             </Row>
-            {props.edit}
+            {props.adminOptions}
             <Row className="row justify-content-center">
                 <Col lg={4} className="my-auto">
                     <img src={props.phone.imageFileName} alt="phone_image" className={styles.phone_img} />
