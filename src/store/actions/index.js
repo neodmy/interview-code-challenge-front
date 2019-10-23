@@ -4,5 +4,6 @@ export {
     selectPhone,
 } from './phones';
 export {
-    switchAdmin
+    switchAdmin,
+    adminDeletePhone,
 } from './admin';

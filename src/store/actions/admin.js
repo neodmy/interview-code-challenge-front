@@ -28,14 +28,14 @@ export const adminSavePhoneSuccess = () => {
 export const adminSavePhoneFail = (message) => {
     return {
         type: actionTypes.ADMIN_SAVE_PHONE_FAIL,
-        phoneError: message,
+        errorRequest: message,
     }
 };
 
 export const adminSavePhone = (phoneData) => {
     return dispatch => {
         dispatch(adminSavePhoneStart());
-        axios.put('/phone/' + phoneData._id, { phoneData })
+        axios.put(`/phone/${phoneData._id}`, { phoneData })
             .then(res => {
                 dispatch(adminSavePhoneSuccess());
             })
@@ -60,7 +60,7 @@ export const adminDeletePhoneSuccess = () => {
 export const adminDeletePhoneFail = (message) => {
     return {
         type: actionTypes.ADMIN_DELETE_PHONE_FAIL,
-        phoneError: message,
+        errorRequest: message,
     };
 };
 

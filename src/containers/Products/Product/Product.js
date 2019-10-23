@@ -9,8 +9,18 @@ import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
 
 import styles from './Product.module.css';
+import CustomModal from '../../../components/CustomModal/CustomModal';
+import * as actions from '../../../store/actions';
 
 class Product extends Component {
+    state = {
+        showModal: false,
+    }
+
+    componentDidUpdate() {
+        if (this.props.successRequest) this.props.history.push('/products');
+    }
+
     constructor(props) {
         super(props);
         this.phone = props.phones.filter(phone => phone._id === props.selectedPhone)[0];
@@ -33,22 +43,45 @@ class Product extends Component {
         return table;
     }
 
-    render() {
+    onShowDeleteModalHandle = () => {
+        this.setState({ showModal: true });
+    }
+
+    onHideDeleteModalHandle = () => {
+        this.setState({ showModal: false });
+    }
+
+    onConfirmDeleteHandle = () => {
+        this.props.onDeletePhone(this.phone._id);
+    }
+
+    createContent = () => {
         let content = <Redirect to="/products" />;
-        if (this.props.phones.length !== 0) {
+        if (this.phone) {
             let edit = null;
             if (this.props.isAdmin) {
                 edit = (
                     <Row className="row justify-content-center mb-3">
                         <Col >
                             <Button variant="outline-light mr-2">Edit</Button>
-                            <Button variant="outline-danger">Delete</Button>
+                            <Button variant="outline-danger" onClick={this.onShowDeleteModalHandle}>Delete</Button>
                         </Col>
                     </Row>
                 );
             }
+            const deleteModal = (
+                <CustomModal
+                    show={this.state.showModal}
+                    onHide={this.onHideDeleteModalHandle}
+                    initialContent={`Are you sure deleting ${this.phone.name}?`}
+                    loading={this.props.loadingPhone}
+                    error={this.props.errorRequest}
+                    onConfirm={() => this.onConfirmDeleteHandle()}
+                />
+            );
             content = (
                 <Container className="text-light text-center" >
+                    {deleteModal}
                     <Row className="row justify-content-center mt-5 mb-3 ">
                         <Col>
                             <h1 className="display-5">{this.phone.name}</h1>
@@ -78,7 +111,15 @@ class Product extends Component {
                 </Container >
             );
         }
-        return (<React.Fragment>{content}</React.Fragment>);
+        return content;
+    }
+
+    render() {
+        return (
+            <React.Fragment>
+                {this.createContent()}
+            </React.Fragment>
+        );
     }
 }
 
@@ -87,12 +128,15 @@ const mapStateToProps = state => {
         phones: state.phones.phones,
         selectedPhone: state.phones.selectedPhone,
         isAdmin: state.admin.isAdmin,
+        loadingPhone: state.admin.loadingPhone,
+        errorRequest: state.admin.errorRequest,
+        successRequest: state.admin.successRequest,
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
-
+        onDeletePhone: (id) => dispatch(actions.adminDeletePhone(id)),
     }
 }
 

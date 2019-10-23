@@ -4,8 +4,10 @@ import { updateObject } from '../util';
 const initialState = {
     isAdmin: false,
     loadingPhone: false,
-    phoneError: null,
+    requestResult: null,
     phoneModified: false,
+    errorRequest: null,
+    successRequest: false,
 };
 
 const switchAdmin = (state, action) => {
@@ -17,27 +19,27 @@ const adminModifyPhone = (state, action) => {
 };
 
 const adminSavePhoneStart = (state, action) => {
-    return updateObject(state, { loadingPhone: true, error: null });
+    return updateObject(state, { loadingPhone: true, errorRequest: null });
 };
 
 const adminSavePhoneSuccess = (state, action) => {
-    return updateObject(state, { loadingPhone: false, }); //TODO
+    return updateObject(state, { loadingPhone: false, errorRequest: null });
 };
 
 const adminSavePhoneFail = (state, action) => {
-    return updateObject(state, { loadingPhone: false, error: action.error });
+    return updateObject(state, { loadingPhone: false, errorRequest: action.errorRequest });
 };
 
 const adminDeletePhoneStart = (state, action) => {
-    return updateObject(state, { loadingPhone: true });
+    return updateObject(state, { loadingPhone: true, errorRequest: null, successRequest: false });
 }
 
 const adminDeletePhoneSuccess = (state, action) => {
-    return updateObject(state, { loadingPhone: false })
+    return updateObject(state, { loadingPhone: false, errorRequest: null, successRequest: true })
 }
 
 const adminDeletePhoneFail = (state, action) => {
-    return updateObject(state, { loadingPhone: false, phoneError: action.phoneError });
+    return updateObject(state, { loadingPhone: false, errorRequest: action.errorRequest });
 }
 
 const reducer = (state = initialState, action) => {
