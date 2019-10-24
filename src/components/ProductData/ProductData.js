@@ -17,7 +17,7 @@ const productData = (props) => {
                 table.push(
                     <tr key={key}>
                         <td>{propUpperCase}</td>
-                        <td>{props.editMode ? <input type="text" value={props.phone[key]} /> : props.phone[key]}</td>
+                        <td>{props.phone[key]}</td>
                     </tr>
                 );
             }

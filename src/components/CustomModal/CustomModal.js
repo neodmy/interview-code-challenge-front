@@ -15,7 +15,7 @@ const customModal = (props) => {
     return (
         <Modal show={props.show} onHide={props.onHide} aria-labelledby="title">
             <Modal.Header closeButton style={bg} className="text-light">
-                <Modal.Title id="title">Delete Phone</Modal.Title>
+                <Modal.Title id="title">{props.title}</Modal.Title>
             </Modal.Header>
             <Modal.Body style={bg} className="text-light">
                 <Container>

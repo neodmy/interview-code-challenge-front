@@ -8,12 +8,16 @@ import Button from 'react-bootstrap/Button';
 
 import CustomModal from '../../../components/CustomModal/CustomModal';
 import ProductData from '../../../components/ProductData/ProductData';
+import ProductForm from '../ProductForm/ProductForm';
 import * as actions from '../../../store/actions';
 
 class Product extends Component {
     state = {
-        showModal: false,
-        editMode: false
+        showDeleteModal: false,
+        showSaveModal: false,
+        editMode: false,
+        formChanged: false,
+        undoFormChanges: false,
     }
 
     componentDidUpdate() {
@@ -25,20 +29,41 @@ class Product extends Component {
         this.phone = props.phones.filter(phone => phone._id === props.selectedPhone)[0];
     }
 
-    onShowDeleteModalHandle = () => {
-        this.setState({ showModal: true });
+    onShowDeleteModalHandler = () => {
+        this.setState({ showDeleteModal: true });
     }
 
-    onHideDeleteModalHandle = () => {
-        this.setState({ showModal: false });
+    onHideDeleteModalHandler = () => {
+        this.setState({ showDeleteModal: false });
     }
 
-    onConfirmDeleteHandle = () => {
+    onConfirmDeleteHandler = () => {
         this.props.onDeletePhone(this.phone._id);
     }
 
-    onEnterEditModeHandle = () => {
-        this.setState({ editMode: !this.state.editMode })
+    onShowSaveModalHandler = () => {
+        this.setState({ showSaveModal: true });
+    }
+
+    onHideSaveModalHandler = () => {
+        this.setState({ showSaveModal: false });
+    }
+
+    onConfirmSaveHandler = () => {
+
+    }
+
+    onEnterEditModeHandler = () => {
+        this.setState({ editMode: !this.state.editMode });
+    }
+
+    onFormChangedHandler = (status) => {
+        console.log(status);
+        this.setState({ formChanged: status, undoFormChanges: false });
+    }
+
+    onUndoChangesHandler = () => {
+        this.setState({ formChanged: false, undoFormChanges: true });
     }
 
     createContent = () => {
@@ -49,26 +74,52 @@ class Product extends Component {
                 adminOptions = (
                     <Row className="row justify-content-center mb-3">
                         <Col >
-                            <Button variant="outline-light mr-2" onClick={this.onEnterEditModeHandle}>Edit</Button>
-                            <Button variant="outline-danger" onClick={this.onShowDeleteModalHandle}>Delete</Button>
+                            {this.state.formChanged
+                                ? (<React.Fragment>
+                                    <Button variant="outline-success mr-2" onClick={this.onShowSaveModalHandler}>Save</Button>
+                                    <Button variant="outline-primary mr-2" onClick={this.onUndoChangesHandler}>Undo</Button>
+                                </React.Fragment>)
+                                : <Button variant="outline-light mr-2" onClick={this.onEnterEditModeHandler}>Edit</Button>}
+                            <Button variant="outline-danger" onClick={this.onShowDeleteModalHandler}>Delete</Button>
                         </Col>
-                    </Row>
+                    </Row >
                 );
             }
             const deleteModal = (
                 <CustomModal
-                    show={this.state.showModal}
-                    onHide={this.onHideDeleteModalHandle}
-                    initialContent={`Are you sure deleting ${this.phone.name}?`}
+                    show={this.state.showDeleteModal}
+                    title="Delete Phone"
+                    onHide={this.onHideDeleteModalHandler}
+                    initialContent={`Are you sure you want to delete ${this.phone.name}?`}
                     loading={this.props.loadingPhone}
                     error={this.props.errorRequest}
-                    onConfirm={() => this.onConfirmDeleteHandle()}
+                    onConfirm={() => this.onConfirmDeleteHandler()}
+                />
+            );
+            const saveModal = (
+                <CustomModal
+                    show={this.state.showSaveModal}
+                    title="Save Changes"
+                    onHide={this.onHideSaveModalHandler}
+                    initialContent="Are you sure you want to save changes?"
+                    loading={this.props.loadingPhone}
+                    error={this.props.errorRequest}
+                    onConfirm={() => this.onConfirmSaveHandler()}
                 />
             );
             content = (
                 <React.Fragment>
                     {deleteModal}
-                    <ProductData phone={this.phone} adminOptions={adminOptions} editMode={this.state.editMode} />
+                    {saveModal}
+                    {!this.state.editMode
+                        ? <ProductData
+                            phone={this.phone}
+                            adminOptions={adminOptions} />
+                        : <ProductForm
+                            phone={this.phone}
+                            adminOptions={adminOptions}
+                            formChanged={this.onFormChangedHandler}
+                            undo={this.state.undoFormChanges} />}
                 </React.Fragment>
 
             );
