@@ -7,10 +7,10 @@ export const switchAdmin = () => {
     };
 };
 
-export const adminModifyPhone = () => {
+export const resetAdminRequestStatus = () => {
     return {
-        type: actionTypes.ADMIN_MODIFY_PHONE,
-    }
+        type: actionTypes.RESET_ADMIN_REQUEST_STATUS
+    };
 };
 
 export const adminSavePhoneStart = () => {
@@ -35,7 +35,7 @@ export const adminSavePhoneFail = (message) => {
 export const adminSavePhone = (phoneData) => {
     return dispatch => {
         dispatch(adminSavePhoneStart());
-        axios.put(`/phone/${phoneData._id}`, { phoneData })
+        axios.put(`phones/${phoneData._id}`, phoneData)
             .then(res => {
                 dispatch(adminSavePhoneSuccess());
             })
@@ -67,10 +67,10 @@ export const adminDeletePhoneFail = (message) => {
 export const adminDeletePhone = (id) => {
     return dispatch => {
         dispatch(adminDeletePhoneStart());
-        axios.delete(`/phones/${id}`)
+        axios.delete(`phones/${id}`)
             .then(res => dispatch(adminDeletePhoneSuccess()))
             .catch(
                 err => dispatch(adminDeletePhoneFail("Sorry, selected phone couldn't be removed"))
             );
     }
-}
+};

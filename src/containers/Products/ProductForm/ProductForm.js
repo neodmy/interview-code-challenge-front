@@ -51,8 +51,19 @@ class ProductForm extends Component {
         updatedForm[key] = updatedFormElement;
         const formChangeStatus = this.checkFormChanged(updatedForm);
         this.setState({ form: updatedForm });
-        this.props.formChanged(formChangeStatus);
+        this.props.formChanged(formChangeStatus, key, newValue);
     };
+
+    undoForm = () => {
+        const updatedForm = { ...this.state.form };
+        for (let prop in updatedForm) {
+            if (updatedForm.hasOwnProperty(prop)) {
+                updatedForm[prop] = { ...this.state.form[prop] }
+                updatedForm[prop].value = updatedForm[prop].initialValue;
+            }
+        }
+        this.setState({ form: updatedForm });
+    }
 
     createFormGroup = (key, stateInput) => {
         let inputType = <Form.Control type="text" value={stateInput.value} onChange={(event) => this.inputChangeHandler(event, key)} />;
@@ -78,10 +89,6 @@ class ProductForm extends Component {
         return content;
     };
 
-    undoForm = () => {
-
-    };
-
     render() {
         return (
             <Container className="text-light text-center" >
@@ -93,7 +100,7 @@ class ProductForm extends Component {
                 {this.props.adminOptions}
                 <Row className="row justify-content-center">
                     <Col lg={4} className="my-auto">
-                        <img src={this.props.phone.imageFileName} alt="phone_image" className={styles.phone_img} />
+                        <img src={process.env.REACT_APP_BACKEND + this.props.phone.imageFileName} alt="phone_image" className={styles.phone_img} />
                     </Col>
                     <Col lg={6}>
                         <Form>

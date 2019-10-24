@@ -17,17 +17,13 @@ class Product extends Component {
         showSaveModal: false,
         editMode: false,
         formChanged: false,
-        undoFormChanges: false,
+        phoneUpdate: null,
     }
 
     componentDidUpdate() {
         if (this.props.successRequest) this.props.history.push('/products');
     }
 
-    constructor(props) {
-        super(props);
-        this.phone = props.phones.filter(phone => phone._id === props.selectedPhone)[0];
-    }
 
     onShowDeleteModalHandler = () => {
         this.setState({ showDeleteModal: true });
@@ -37,8 +33,8 @@ class Product extends Component {
         this.setState({ showDeleteModal: false });
     }
 
-    onConfirmDeleteHandler = () => {
-        this.props.onDeletePhone(this.phone._id);
+    onConfirmDeleteHander = () => {
+        this.props.onDeletePhone(this.props.selectedPhone._id);
     }
 
     onShowSaveModalHandler = () => {
@@ -50,36 +46,43 @@ class Product extends Component {
     }
 
     onConfirmSaveHandler = () => {
-
+        const phone = { ...this.state.phoneUpdate }
+        this.props.onSavePhone(phone);
     }
 
-    onEnterEditModeHandler = () => {
-        this.setState({ editMode: !this.state.editMode });
+    ToggleEditMode = () => {
+        const newMode = !this.state.editMode;
+        this.setState((prevState) => ({
+            editMode: newMode,
+            formChanged: !newMode,
+            phoneUpdate: !newMode ? null : prevState.phoneUpdate
+        }));
+        console.log(this.state.phoneUpdate);
     }
 
-    onFormChangedHandler = (status) => {
-        console.log(status);
-        this.setState({ formChanged: status, undoFormChanges: false });
-    }
-
-    onUndoChangesHandler = () => {
-        this.setState({ formChanged: false, undoFormChanges: true });
+    onFormChangedHandler = (status, propertyName, propertyValue) => {
+        const phoneUpdatedData = { ...this.props.selectedPhone };
+        phoneUpdatedData[propertyName] = propertyValue;
+        console.log(phoneUpdatedData);
+        this.setState({ formChanged: status, phoneUpdate: phoneUpdatedData });
     }
 
     createContent = () => {
         let content = <Redirect to="/products" />;
-        if (this.phone) {
+        if (this.props.selectedPhone) {
             let adminOptions = null;
             if (this.props.isAdmin) {
                 adminOptions = (
                     <Row className="row justify-content-center mb-3">
                         <Col >
-                            {this.state.formChanged
-                                ? (<React.Fragment>
-                                    <Button variant="outline-success mr-2" onClick={this.onShowSaveModalHandler}>Save</Button>
-                                    <Button variant="outline-primary mr-2" onClick={this.onUndoChangesHandler}>Undo</Button>
-                                </React.Fragment>)
-                                : <Button variant="outline-light mr-2" onClick={this.onEnterEditModeHandler}>Edit</Button>}
+                            {this.state.formChanged && this.state.editMode
+                                ? <Button variant="outline-success mr-2" onClick={this.onShowSaveModalHandler}>Save</Button>
+                                : null}
+                            <Button variant="outline-light mr-2" onClick={this.ToggleEditMode}>
+                                {this.state.editMode
+                                    ? 'Details'
+                                    : 'Edit'}
+                            </Button>
                             <Button variant="outline-danger" onClick={this.onShowDeleteModalHandler}>Delete</Button>
                         </Col>
                     </Row >
@@ -90,10 +93,10 @@ class Product extends Component {
                     show={this.state.showDeleteModal}
                     title="Delete Phone"
                     onHide={this.onHideDeleteModalHandler}
-                    initialContent={`Are you sure you want to delete ${this.phone.name}?`}
+                    initialContent={`Are you sure you want to delete ${this.props.selectedPhone.name}?`}
                     loading={this.props.loadingPhone}
                     error={this.props.errorRequest}
-                    onConfirm={() => this.onConfirmDeleteHandler()}
+                    onConfirm={this.onConfirmDeleteHander}
                 />
             );
             const saveModal = (
@@ -104,7 +107,7 @@ class Product extends Component {
                     initialContent="Are you sure you want to save changes?"
                     loading={this.props.loadingPhone}
                     error={this.props.errorRequest}
-                    onConfirm={() => this.onConfirmSaveHandler()}
+                    onConfirm={this.onConfirmSaveHandler}
                 />
             );
             content = (
@@ -113,15 +116,14 @@ class Product extends Component {
                     {saveModal}
                     {!this.state.editMode
                         ? <ProductData
-                            phone={this.phone}
+                            phone={this.props.selectedPhone}
                             adminOptions={adminOptions} />
                         : <ProductForm
-                            phone={this.phone}
+                            phone={this.props.selectedPhone}
                             adminOptions={adminOptions}
                             formChanged={this.onFormChangedHandler}
-                            undo={this.state.undoFormChanges} />}
+                        />}
                 </React.Fragment>
-
             );
         }
         return content;
@@ -138,18 +140,18 @@ class Product extends Component {
 
 const mapStateToProps = state => {
     return {
-        phones: state.phones.phones,
         selectedPhone: state.phones.selectedPhone,
         isAdmin: state.admin.isAdmin,
         loadingPhone: state.admin.loadingPhone,
         errorRequest: state.admin.errorRequest,
-        successRequest: state.admin.successRequest,
+        successRequest: state.admin.successRequest
     }
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         onDeletePhone: (id) => dispatch(actions.adminDeletePhone(id)),
+        onSavePhone: (phoneData) => dispatch(actions.adminSavePhone(phoneData)),
     }
 }
 

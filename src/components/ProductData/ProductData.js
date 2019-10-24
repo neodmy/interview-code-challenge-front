@@ -35,7 +35,7 @@ const productData = (props) => {
             {props.adminOptions}
             <Row className="row justify-content-center">
                 <Col lg={4} className="my-auto">
-                    <img src={props.phone.imageFileName} alt="phone_image" className={styles.phone_img} />
+                    <img src={process.env.REACT_APP_BACKEND + props.phone.imageFileName} alt="phone_image" className={styles.phone_img} />
                 </Col>
                 <Col lg={6}>
                     <p>{props.phone.description}</p>

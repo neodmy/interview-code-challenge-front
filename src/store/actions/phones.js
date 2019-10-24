@@ -24,9 +24,8 @@ export const fetchPhonesFail = (message) => {
 export const fetchPhones = () => {
     return dispatch => {
         dispatch(fetchPhonesStart());
-        axios.get('/phones')
+        axios.get('phones')
             .then(res => {
-                res.data.forEach(phone => phone.imageFileName = 'http://localhost:3001/' + phone.imageFileName)
                 dispatch(fetchPhonesSuccess(res.data));
             })
             .catch(err => {
@@ -35,9 +34,9 @@ export const fetchPhones = () => {
     }
 };
 
-export const selectPhone = (phoneId) => {
+export const selectPhone = (phone) => {
     return {
         type: actionTypes.SELECT_PHONE,
-        selectedPhone: phoneId,
+        selectedPhone: phone,
     }
 };

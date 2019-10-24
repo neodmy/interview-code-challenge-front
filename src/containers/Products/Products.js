@@ -12,6 +12,7 @@ import * as actions from '../../store/actions';
 class Products extends Component {
     componentDidMount() {
         this.props.onFetchPones();
+        this.props.onResetAdminRequestStatus();
     }
 
     render() {
@@ -21,10 +22,10 @@ class Products extends Component {
             content = phones.map(phone => {
                 return <PhoneCard
                     key={phone._id}
-                    img={phone.imageFileName}
+                    img={process.env.REACT_APP_BACKEND + phone.imageFileName}
                     name={phone.name}
                     description={phone.description}
-                    clicked={() => this.props.onSelectPhone(phone._id)} />
+                    clicked={() => this.props.onSelectPhone(phone)} />
             });
         }
 
@@ -53,8 +54,9 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
+        onResetAdminRequestStatus: () => dispatch(actions.resetAdminRequestStatus()),
         onFetchPones: () => dispatch(actions.fetchPhones()),
-        onSelectPhone: (phoneId) => dispatch(actions.selectPhone(phoneId))
+        onSelectPhone: (phone) => dispatch(actions.selectPhone(phone))
     }
 }
 
