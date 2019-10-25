@@ -18,6 +18,18 @@ const resetAdminRequestStatus = (state, action) => {
     return updateObject(state, { errorRequest: null, successRequest: false });
 };
 
+const adminUpdatePhoneStart = (state, action) => {
+    return updateObject(state, { loadingPhone: true, errorRequest: null, successRequest: false });
+};
+
+const adminUpdatePhoneSuccess = (state, action) => {
+    return updateObject(state, { loadingPhone: false, errorRequest: null, successRequest: true });
+};
+
+const adminUpdatePhoneFail = (state, action) => {
+    return updateObject(state, { loadingPhone: false, errorRequest: action.errorRequest });
+};
+
 const adminSavePhoneStart = (state, action) => {
     return updateObject(state, { loadingPhone: true, errorRequest: null, successRequest: false });
 };
@@ -46,6 +58,9 @@ const reducer = (state = initialState, action) => {
     const actions = {
         [actionTypes.SWITCH_ADMIN]: () => switchAdmin(state, action),
         [actionTypes.RESET_ADMIN_REQUEST_STATUS]: () => resetAdminRequestStatus(state, action),
+        [actionTypes.ADMIN_UPDATE_PHONE_START]: () => adminUpdatePhoneStart(state, action),
+        [actionTypes.ADMIN_UPDATE_PHONE_SUCCESS]: () => adminUpdatePhoneSuccess(state, action),
+        [actionTypes.ADMIN_UPDATE_PHONE_FAIL]: () => adminUpdatePhoneFail(state, action),
         [actionTypes.ADMIN_SAVE_PHONE_START]: () => adminSavePhoneStart(state, action),
         [actionTypes.ADMIN_SAVE_PHONE_SUCCESS]: () => adminSavePhoneSuccess(state, action),
         [actionTypes.ADMIN_SAVE_PHONE_FAIL]: () => adminSavePhoneFail(state, action),

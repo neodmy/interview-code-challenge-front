@@ -13,6 +13,38 @@ export const resetAdminRequestStatus = () => {
     };
 };
 
+export const adminUpdatePhoneStart = () => {
+    return {
+        type: actionTypes.ADMIN_UPDATE_PHONE_START,
+    }
+};
+
+export const adminUpdatePhoneSuccess = () => {
+    return {
+        type: actionTypes.ADMIN_UPDATE_PHONE_SUCCESS,
+    }
+};
+
+export const adminUpdatePhoneFail = (message) => {
+    return {
+        type: actionTypes.ADMIN_UPDATE_PHONE_FAIL,
+        errorRequest: message,
+    }
+};
+
+export const adminUpdatePhone = (phoneData) => {
+    return dispatch => {
+        dispatch(adminUpdatePhoneStart());
+        axios.put(`phones/${phoneData._id}`, phoneData)
+            .then(res => {
+                dispatch(adminUpdatePhoneSuccess());
+            })
+            .catch(err => {
+                dispatch(adminUpdatePhoneFail('Sorry, your changes couldn\'t be saved'));
+            })
+    }
+};
+
 export const adminSavePhoneStart = () => {
     return {
         type: actionTypes.ADMIN_SAVE_PHONE_START,
@@ -35,7 +67,8 @@ export const adminSavePhoneFail = (message) => {
 export const adminSavePhone = (phoneData) => {
     return dispatch => {
         dispatch(adminSavePhoneStart());
-        axios.put(`phones/${phoneData._id}`, phoneData)
+        phoneData.imageFileName = 'generic.png';
+        axios.post('phones', phoneData)
             .then(res => {
                 dispatch(adminSavePhoneSuccess());
             })

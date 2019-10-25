@@ -14,7 +14,7 @@ import * as actions from '../../../store/actions';
 class Product extends Component {
     state = {
         showDeleteModal: false,
-        showSaveModal: false,
+        showUpdateModal: false,
         editMode: false,
         formChanged: false,
         phoneUpdate: null,
@@ -37,17 +37,17 @@ class Product extends Component {
         this.props.onDeletePhone(this.props.selectedPhone._id);
     }
 
-    onShowSaveModalHandler = () => {
-        this.setState({ showSaveModal: true });
+    onShowUpdateModalHandler = () => {
+        this.setState({ showUpdateModal: true });
     }
 
-    onHideSaveModalHandler = () => {
-        this.setState({ showSaveModal: false });
+    onHideUpdateModalHandler = () => {
+        this.setState({ showUpdateModal: false });
     }
 
-    onConfirmSaveHandler = () => {
+    onConfirmUpdateHandler = () => {
         const phone = { ...this.state.phoneUpdate }
-        this.props.onSavePhone(phone);
+        this.props.onUpdatePhone(phone);
     }
 
     ToggleEditMode = () => {
@@ -74,7 +74,7 @@ class Product extends Component {
                     <Row className="row justify-content-center mb-3">
                         <Col >
                             {this.state.formChanged && this.state.editMode
-                                ? <Button variant="outline-success mr-2" onClick={this.onShowSaveModalHandler}>Save</Button>
+                                ? <Button variant="outline-success mr-2" onClick={this.onShowUpdateModalHandler}>Save</Button>
                                 : null}
                             <Button variant="outline-light mr-2" onClick={this.ToggleEditMode}>
                                 {this.state.editMode
@@ -99,13 +99,13 @@ class Product extends Component {
             );
             const saveModal = (
                 <CustomModal
-                    show={this.state.showSaveModal}
+                    show={this.state.showUpdateModal}
                     title="Save Changes"
-                    onHide={this.onHideSaveModalHandler}
+                    onHide={this.onHideUpdateModalHandler}
                     initialContent="Are you sure you want to save changes?"
                     loading={this.props.loadingPhone}
                     error={this.props.errorRequest}
-                    onConfirm={this.onConfirmSaveHandler}
+                    onConfirm={this.onConfirmUpdateHandler}
                 />
             );
             content = (
@@ -150,7 +150,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onDeletePhone: (id) => dispatch(actions.adminDeletePhone(id)),
-        onSavePhone: (phoneData) => dispatch(actions.adminSavePhone(phoneData)),
+        onUpdatePhone: (phoneData) => dispatch(actions.adminUpdatePhone(phoneData)),
     }
 }
 

@@ -6,6 +6,6 @@ export {
 export {
     switchAdmin,
     adminDeletePhone,
-    adminSavePhone,
+    adminUpdatePhone,
     resetAdminRequestStatus,
 } from './admin';
