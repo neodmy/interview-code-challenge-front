@@ -46,8 +46,8 @@ class AddProduct extends Component {
     };
 
     onConfirmSaveHandler = () => {
-
-    }
+        this.props.onSavePhone(this.state.phone);
+    };
 
     render() {
         const adminOptions = (
@@ -60,14 +60,15 @@ class AddProduct extends Component {
             </Row >
         );
         let content = <Redirect to="/products" />
-        if (this.props.isAdmin && !this.props.successRequest) content = (
-            <ProductForm
-                title="Add Phone"
-                phone={this.state.phone}
-                adminOptions={adminOptions}
-                formChanged={this.onFormChangedHandler}
-            />
-        )
+        if (this.props.isAdmin && !this.props.successRequest)
+            content = (
+                <ProductForm
+                    title="Add Phone"
+                    phone={this.state.phone}
+                    adminOptions={adminOptions}
+                    formChanged={this.onFormChangedHandler}
+                />
+            )
         return (
             <React.Fragment>
                 <CustomModal
@@ -96,7 +97,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
     return {
-
+        onSavePhone: (phone) => dispatch(actions.adminSavePhone(phone)),
     }
 };
 
