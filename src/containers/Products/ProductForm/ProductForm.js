@@ -31,7 +31,6 @@ class ProductForm extends Component {
         },
     };
 
-
     checkFormChanged = (form) => {
         let changed = false;
         for (let prop in form) {
@@ -53,17 +52,6 @@ class ProductForm extends Component {
         this.setState({ form: updatedForm });
         this.props.formChanged(formChangeStatus, key, newValue);
     };
-
-    undoForm = () => {
-        const updatedForm = { ...this.state.form };
-        for (let prop in updatedForm) {
-            if (updatedForm.hasOwnProperty(prop)) {
-                updatedForm[prop] = { ...this.state.form[prop] }
-                updatedForm[prop].value = updatedForm[prop].initialValue;
-            }
-        }
-        this.setState({ form: updatedForm });
-    }
 
     createFormGroup = (key, stateInput) => {
         let inputType = <Form.Control type="text" value={stateInput.value} onChange={(event) => this.inputChangeHandler(event, key)} />;
@@ -94,14 +82,16 @@ class ProductForm extends Component {
             <Container className="text-light text-center" >
                 <Row className="row justify-content-center mt-5 mb-3 ">
                     <Col>
-                        <h1 className="display-5">Edit Phone</h1>
+                        <h1 className="display-5">{this.props.title}</h1>
                     </Col>
                 </Row>
                 {this.props.adminOptions}
                 <Row className="row justify-content-center">
-                    <Col lg={4} className="my-auto">
-                        <img src={process.env.REACT_APP_BACKEND + this.props.phone.imageFileName} alt="phone_image" className={styles.phone_img} />
-                    </Col>
+                    {this.props.phone.imageFileName
+                        ? (<Col lg={4} className="my-auto">
+                            <img src={process.env.REACT_APP_BACKEND + this.props.phone.imageFileName} alt="phone_image" className={styles.phone_img} />
+                        </Col>)
+                        : null}
                     <Col lg={6}>
                         <Form>
                             {this.createForm()}

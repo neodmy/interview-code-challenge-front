@@ -57,13 +57,11 @@ class Product extends Component {
             formChanged: !newMode,
             phoneUpdate: !newMode ? null : prevState.phoneUpdate
         }));
-        console.log(this.state.phoneUpdate);
     }
 
     onFormChangedHandler = (status, propertyName, propertyValue) => {
         const phoneUpdatedData = { ...this.props.selectedPhone };
         phoneUpdatedData[propertyName] = propertyValue;
-        console.log(phoneUpdatedData);
         this.setState({ formChanged: status, phoneUpdate: phoneUpdatedData });
     }
 
@@ -119,6 +117,7 @@ class Product extends Component {
                             phone={this.props.selectedPhone}
                             adminOptions={adminOptions} />
                         : <ProductForm
+                            title="Edit Phone"
                             phone={this.props.selectedPhone}
                             adminOptions={adminOptions}
                             formChanged={this.onFormChangedHandler}

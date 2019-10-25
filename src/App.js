@@ -6,6 +6,7 @@ import Landing from './containers/Landing/Landing';
 import Layout from './hoc/Layout/Layout';
 import Products from './containers/Products/Products';
 import Product from './containers/Products/Product/Product';
+import AddProduct from './containers/Products/AddProduct/AddProduct';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" exact component={Landing} />
           <Route path="/products" component={Products} />
           <Route path="/phone" component={Product} />
+          <Route path="/addphone" component={AddProduct} />
         </Switch>
       </Layout>
     </React.Fragment>
