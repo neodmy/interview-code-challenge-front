@@ -13,6 +13,11 @@ export const resetAdminRequestStatus = () => {
     };
 };
 
+const convertToNumber = (string) => {
+    const number = Number(string);
+    return !number ? string : number;
+};
+
 export const adminUpdatePhoneStart = () => {
     return {
         type: actionTypes.ADMIN_UPDATE_PHONE_START,
@@ -35,6 +40,8 @@ export const adminUpdatePhoneFail = (message) => {
 export const adminUpdatePhone = (phoneData) => {
     return dispatch => {
         dispatch(adminUpdatePhoneStart());
+        phoneData.price = convertToNumber(phoneData.price);
+        phoneData.ram = convertToNumber(phoneData.ram);
         axios.put(`phones/${phoneData._id}`, phoneData)
             .then(res => {
                 dispatch(adminUpdatePhoneSuccess());
@@ -67,6 +74,8 @@ export const adminSavePhoneFail = (message) => {
 export const adminSavePhone = (phoneData) => {
     return dispatch => {
         dispatch(adminSavePhoneStart());
+        phoneData.price = convertToNumber(phoneData.price);
+        phoneData.ram = convertToNumber(phoneData.ram);
         phoneData.imageFileName = 'generic.png';
         axios.post('phones', phoneData)
             .then(res => {
