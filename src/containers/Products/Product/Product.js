@@ -31,6 +31,7 @@ class Product extends Component {
 
     onHideDeleteModalHandler = () => {
         this.setState({ showDeleteModal: false });
+        if (this.props.errorRequest) this.props.resetRequestStatus();
     }
 
     onConfirmDeleteHander = () => {
@@ -43,6 +44,7 @@ class Product extends Component {
 
     onHideUpdateModalHandler = () => {
         this.setState({ showUpdateModal: false });
+        if (this.props.errorRequest) this.props.resetRequestStatus();
     }
 
     onConfirmUpdateHandler = () => {
@@ -151,6 +153,7 @@ const mapDispatchToProps = dispatch => {
     return {
         onDeletePhone: (id) => dispatch(actions.adminDeletePhone(id)),
         onUpdatePhone: (phoneData) => dispatch(actions.adminUpdatePhone(phoneData)),
+        resetRequestStatus: () => dispatch(actions.resetAdminRequestStatus()),
     }
 }
 

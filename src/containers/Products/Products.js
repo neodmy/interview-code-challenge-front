@@ -11,6 +11,8 @@ import Spinner from '../../components/Spinner/Spinner';
 import * as actions from '../../store/actions';
 import Button from 'react-bootstrap/Button';
 
+import { BACKEND_HOST } from '../../config/config';
+
 class Products extends Component {
     componentDidMount() {
         this.props.onFetchPones();
@@ -18,14 +20,14 @@ class Products extends Component {
     }
 
     render() {
-        let content = <Spinner />
+        let content = <Spinner />;
         if (this.props.error) content = <p>{this.props.error}</p>;
-        if (this.props.phones.length !== 0) {
+        if (this.props.phones) {
             const phones = this.props.phones;
             content = phones.map(phone => {
                 return <PhoneCard
                     key={phone._id}
-                    img={process.env.REACT_APP_BACKEND + phone.imageFileName}
+                    img={BACKEND_HOST + phone.imageFileName}
                     name={phone.name}
                     description={phone.description}
                     clicked={() => this.props.onSelectPhone(phone)} />
@@ -40,13 +42,11 @@ class Products extends Component {
                     </Col>
                 </Row>
                 {this.props.isAdmin
-                    ? (
-                        <Row className="row justify-content-end">
-                            <Col xs={2} className="mr-5">
-                                <Button as={NavLink} to="/addphone" variant="outline-light">Add</Button>
-                            </Col>
-                        </Row>
-                    )
+                    ? (<Row className="row justify-content-end">
+                        <Col xs={2} className="mr-5">
+                            <Button as={NavLink} to="/addphone" variant="outline-light">Add</Button>
+                        </Col>
+                    </Row>)
                     : null}
                 <Row className="row justify-content-center">
                     {content}

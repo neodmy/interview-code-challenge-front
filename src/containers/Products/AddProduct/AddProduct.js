@@ -43,6 +43,7 @@ class AddProduct extends Component {
 
     onHideModalHandler = () => {
         this.setState({ showModal: false });
+        if (this.props.errorRequest) this.props.resetRequestStatus();
     };
 
     onConfirmSaveHandler = () => {
@@ -98,6 +99,7 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onSavePhone: (phone) => dispatch(actions.adminSavePhone(phone)),
+        resetRequestStatus: () => dispatch(actions.resetAdminRequestStatus()),
     }
 };
 

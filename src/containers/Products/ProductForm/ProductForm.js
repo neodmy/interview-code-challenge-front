@@ -6,6 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 import styles from './ProductForm.module.css';
+import { BACKEND_HOST } from '../../../config/config';
 
 class ProductForm extends Component {
     createFormObject = (valueContent, labelContent, typeContent) => {
@@ -89,7 +90,7 @@ class ProductForm extends Component {
                 <Row className="row justify-content-center">
                     {this.props.phone.imageFileName
                         ? (<Col lg={4} className="my-auto">
-                            <img src={process.env.REACT_APP_BACKEND + this.props.phone.imageFileName} alt="phone_image" className={styles.phone_img} />
+                            <img src={BACKEND_HOST + this.props.phone.imageFileName} alt="phone_image" className={styles.phone_img} />
                         </Col>)
                         : null}
                     <Col lg={6}>

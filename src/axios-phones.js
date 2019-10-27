@@ -1,7 +1,8 @@
 import axios from 'axios';
+import { BACKEND_HOST } from './config/config';
 
 const instance = axios.create({
-    baseURL: process.env.REACT_APP_BACKEND,
+    baseURL: BACKEND_HOST,
 });
 
 export default instance;

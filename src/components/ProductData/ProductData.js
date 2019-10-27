@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 
 import styles from './ProductData.module.css';
+import { BACKEND_HOST } from '../../config/config';
 
 const productData = (props) => {
     const phoneDetails = () => {
@@ -35,7 +36,7 @@ const productData = (props) => {
             {props.adminOptions}
             <Row className="row justify-content-center">
                 <Col lg={4} className="my-auto">
-                    <img src={process.env.REACT_APP_BACKEND + props.phone.imageFileName} alt="phone_image" className={styles.phone_img} />
+                    <img src={BACKEND_HOST + props.phone.imageFileName} alt="phone_image" className={styles.phone_img} />
                 </Col>
                 <Col lg={6}>
                     <p>{props.phone.description}</p>
