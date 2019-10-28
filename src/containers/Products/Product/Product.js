@@ -48,8 +48,7 @@ class Product extends Component {
     }
 
     onConfirmUpdateHandler = () => {
-        const phone = { ...this.state.phoneUpdate }
-        this.props.onUpdatePhone(phone);
+        this.props.onUpdatePhone(this.state.phoneUpdate);
     }
 
     ToggleEditMode = () => {

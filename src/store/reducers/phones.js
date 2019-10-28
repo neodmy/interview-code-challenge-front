@@ -2,14 +2,14 @@ import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../util';
 
 const initialState = {
-    phones: [],
+    phones: null,
     loading: false,
     error: null,
     selectedPhone: null,
 };
 
 const fetchPhonesStart = (state, action) => {
-    return updateObject(state, { loading: true, error: null, selectedPhone: null });
+    return updateObject(state, { loading: true, error: null, selectedPhone: null, phones: null });
 };
 
 const fecthPhonesSuccess = (state, action) => {
@@ -21,7 +21,7 @@ const fecthPhonesSuccess = (state, action) => {
 };
 
 const fetchPhonesFail = (state, action) => {
-    return updateObject(state, { loading: false, error: action.error });
+    return updateObject(state, { loading: false, error: action.error, phones: null });
 };
 
 const selectPhone = (state, action) => {

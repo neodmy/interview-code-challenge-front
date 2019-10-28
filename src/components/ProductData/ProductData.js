@@ -30,16 +30,16 @@ const productData = (props) => {
         <Container className="text-light text-center" >
             <Row className="row justify-content-center mt-5 mb-3 ">
                 <Col>
-                    <h1 className="display-5">{props.phone.name}</h1>
+                    <h1 className="display-5">{props.phone ? props.phone.name : null}</h1>
                 </Col>
             </Row>
             {props.adminOptions}
             <Row className="row justify-content-center">
                 <Col lg={4} className="my-auto">
-                    <img src={BACKEND_HOST + props.phone.imageFileName} alt="phone_image" className={styles.phone_img} />
+                    <img src={BACKEND_HOST + (props.phone ? props.phone.imageFileName : null)} alt="phone_image" className={styles.phone_img} />
                 </Col>
                 <Col lg={6}>
-                    <p>{props.phone.description}</p>
+                    <p>{props.phone ? props.phone.description : null}</p>
                     <Table className="text-light">
                         <thead>
                             <tr>

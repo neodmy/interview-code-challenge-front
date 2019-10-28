@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
-import { connect } from 'react-redux';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -8,14 +7,8 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 
 import styles from './Landing.module.css';
-import * as actions from '../../store/actions';
 
 class Landing extends Component {
-
-    checkoutHandler = () => {
-        this.props.onFetchPhones();
-        this.props.history.push('/products');
-    }
 
     render() {
         return (
@@ -32,10 +25,4 @@ class Landing extends Component {
     }
 }
 
-const mapDispatchToProps = dispatch => {
-    return {
-        onFetchPhones: () => dispatch(actions.fetchPhones()),
-    }
-}
-
-export default connect(null, mapDispatchToProps)(Landing);
+export default Landing;

@@ -20,11 +20,11 @@ class Products extends Component {
     }
 
     render() {
-        let content = <Spinner />;
+        let content = <p>Sorry, we have no phones at the moment</p>;
+        if (this.props.loading) content = <Spinner />;
         if (this.props.error) content = <p>{this.props.error}</p>;
-        if (this.props.phones) {
-            const phones = this.props.phones;
-            content = phones.map(phone => {
+        if (this.props.phones !== null && this.props.phones.length !== 0) {
+            content = this.props.phones.map(phone => {
                 return <PhoneCard
                     key={phone._id}
                     img={BACKEND_HOST + phone.imageFileName}
@@ -33,7 +33,6 @@ class Products extends Component {
                     clicked={() => this.props.onSelectPhone(phone)} />
             });
         }
-
         return (
             <Container className="text-center text-light">
                 <Row className="mt-5 mb-2">

@@ -13,7 +13,7 @@ const phoneCard = (props) => {
             <Card.Body>
                 <Card.Title>{props.name}</Card.Title>
                 <Card.Text>
-                    {props.description.substring(0, 60) + '...'}
+                    {props.description ? props.description.substring(0, 60) + '...' : null}
                 </Card.Text>
                 <Button as={Link} to="/phone" variant="outline-light" onClick={props.clicked}>Details</Button>
             </Card.Body>
