@@ -1,68 +1,74 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Interview-code-challenge frontend
 
-## Available Scripts
+An extremely simple [React](https://reactjs.org)  App for [GuideSmiths](https://www.guidesmiths.com/) Interview Challenge. It has been developed following [Redux](https://react-redux.js.org/) pattern to manage App state.
 
-In the project directory, you can run:
+This App is packed using [Docker](https://www.docker.com/) container, including the following file:
+- A Dockerfile to create the App image along with a [NGINX](https://www.nginx.com/) image .
 
-### `npm start`
+You can run it with [npm scripts](https://docs.npmjs.com/misc/scripts). Please, refer to the [Usage](#usage) section for further instructions.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+:warning: Please, note this App is thought be run with [this specific backend](https://github.com/neodmy/interview-code-challenge). Make sure you follow the instructions provided in that repository REAMDE before running this App (unless you want to test fetching no data App response).
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+# Table of Contents
+- [Overview](#overview)
+	- [Main features](#main-features)
+	- [Admin mode](#admin-mode)
+	- [Limitations](#limitations)
+- [Usage](#usage)
+	- [Tests](#tests)
+	- [Running the App](#running-the-app)
 
-### `npm test`
+# Overview
+## Main features
+The App simulates a phone store web. It offers a variety of products, with a brief description. On top of that, you can check phone details (i.e. manufacturer, ram amount, price, etc) by clicking on any of the products.
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+For the shake of completeness, although not required at all, it offers the remaining CRUD operations (create, update and delete) by faking an admin mode.
 
-### `npm run build`
+## Admin mode
+As mention above, the admin mode is enable by clicking on the `ADMIN` button. Toggle it to activate or deactivate this mode mode.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+It will allow you to add a *phone* from the `Products` page, and delete or modify an existing one from the selected `Phone` page.
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+## Limitations
+Due to one's domain of React App development at the moment, you will quickly spot the underlying limitations, although I would like to list them:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- When adding a phone, you will not be able to add a custom image. Every new phone you add will be supplied with a generic image.
+- There are no CSS transitions, so that you may appreciate components suddenly appear in front of your eyes.
+- Tests are extremely simple.
 
-### `npm run eject`
+# Usage
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Tests
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+To run tests, execute:
+```
+ $ npm test
+```
+which will execute very simple tests from `src/test` folder.
 
-Instead, it will copy all the configuration files and the transitive dependencies (Webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Running the App
 
-## Learn More
+:warning: Do not forget to run the [backend](https://github.com/neodmy/interview-code-challenge) before executing this App to fetch data.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+You can either run locally with the development server executing:
+```
+$ npm start
+```
+and then access the App with your browser on `http://localhost:3000`, or building the production image:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+```
+$ npm run app:build
+```
+which will execute `docker build -t neodmy/frontend .`  being `neodmy/frontend` the image tag. That image also contains a NGINX image. To run the container execute:
+```
+$ npm run app:up
+``` 
+resulting `docker run -d --name neodmy-frontend -p 3000:80 neodmy/frontend`.
 
-### Code Splitting
+Again, you can access the App on your browser on `http://localhost:3000`.
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+To stop the App execute:
+```
+$ npm run app:down
+```
