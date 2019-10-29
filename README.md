@@ -40,6 +40,11 @@ Due to one's domain of React App development at the moment, you will quickly spo
 
 ## Tests
 
+Before running the tests, you must install project dependencies:
+```
+$ npm install
+```
+
 To run tests, execute:
 ```
  $ npm test
