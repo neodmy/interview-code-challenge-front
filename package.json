@@ -20,7 +20,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "app:build": "docker build -t neodmy/frontend .",
-    "app:up": "docker run -d --name neodmy-frontend -p 3000:80 neodmy/frontend",
+    "app:up": "docker container rm neodmy-frontend &&  docker run -d --name neodmy-frontend -p 3000:80 neodmy/frontend",
     "app:down": "docker stop neodmy-frontend"
   },
   "eslintConfig": {
