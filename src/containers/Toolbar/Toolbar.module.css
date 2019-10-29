@@ -1,0 +1,27 @@
+a{
+    color: grey;
+}
+
+.button_active {
+    background-color: green;
+    border:none;
+    text-align: center;
+    text-decoration: none;
+    margin-left: 13px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 3px;
+    color: white;
+}
+
+.button_inactive {
+    background-color:rgb(32, 23, 38);
+    border:none;
+    text-align: center;
+    text-decoration: none;
+    margin-left: 13px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 3px;
+    color: white;
+}
